@@ -22,10 +22,12 @@ class IndexAction extends Action
     	$data=array();
     	foreach($itemList as $k=>$v) {
     		$data[$k]['count']=$voteInfo = M('vote', null)->where('item_id='.$k)->count();
-    		$data[$k]['ratio']=round(($data[$k]['count']/$voteCount)*100);
+    		$data[$k]['ratio']=round($data[$k]['count']/$voteCount,2);
+    		$data[$k]['name']=$itemList[$k].$data[$k]['count']."次";
     	}
+    	var_dump($data);
     	$this->assign('data', $data);
-    	
+     
     	//获取当前的用户ID
     	session_start();
     	$user=array('id'=>1,'username'=>'baker');
@@ -40,7 +42,6 @@ class IndexAction extends Action
     
     public function vote()
     {
-    	echo '111';exit;
     	session_start();
     	$user=array('id'=>1,'username'=>'baker');
     	$data=array();
@@ -48,14 +49,14 @@ class IndexAction extends Action
     	$data['ip_addr']=$_SERVER['REMOTE_ADDR'];
     	$data['item_id']=$_POST['vote'];
     	$data['item_value']=1;
-    	$data['uid']=$user['uid'];
+    	$data['uid']=$user['id'];
     	
     	$res=M('vote',null)->add($data);
-    	
+ 
     	if($res){
-			return 1;
+			echo 1;
 		}else{
-			return 0;
+			echo 0;
 		}
     }
 }
