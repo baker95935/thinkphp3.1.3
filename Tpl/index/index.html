@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=">
+<title>投票</title>
+</head>
+<body>
+标题
+ <br>
+ 
+  <foreach name="itemList" key="key" item="item">
+     <input type="radio" name="vote" id="vote"  value="{$key}">{$item}<br>
+  </foreach>
+  <button class="commonButton">投票</button>
+ 
+</body>
+</html>
+<script src="/Public/jquery.js"></script>
+<script type="text/javascript">
+       $(function(){
+           $('.commonButton').click(function(){
+               var vote = $('input:radio:checked').val();
+             
+               if(vote){
+                   $.ajax({
+                       url:'/index/vote',
+                       data:{vote:vote},
+                       type:'post',
+                       success:function(e){
+
+                           if(e==1){
+                               alert('投票成功！');
+                               location.reload();
+                               return false;
+                           } 
+                       }
+                   });
+               }else{
+                   alert('请选择后再投票');
+                   return false;
+               }
+           });
+       });
+</script>
