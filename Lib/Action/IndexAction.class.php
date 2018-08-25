@@ -25,7 +25,16 @@ class IndexAction extends Action
     		$data[$k]['ratio']=round($data[$k]['count']/$voteCount,2);
     		$data[$k]['name']=$itemList[$k].$data[$k]['count']."次";
     	}
-    	var_dump($data);
+    	$realData=array();
+    	$data['percent'] = [
+    		['item' => $data[1]['name'],'count' => $data[1]['count'],'percent'=>$data[1]['ratio']],
+    		['item' => $data[2]['name'],'count' => $data[2]['count'],'percent'=>$data[2]['ratio']],
+    		['item' => $data[3]['name'],'count' => $data[3]['count'],'percent'=>$data[3]['ratio']],
+    		['item' => $data[4]['name'],'count' => $data[4]['count'],'percent'=>$data[4]['ratio']],
+    		['item' => $data[5]['name'],'count' => $data[5]['count'],'percent'=>$data[5]['ratio']],
+    		['item' => $data[6]['name'],'count' => $data[6]['count'],'percent'=>$data[6]['ratio']],
+    	];
+    	$data['percent'] = json_encode($data['percent']);
     	$this->assign('data', $data);
      
     	//获取当前的用户ID
