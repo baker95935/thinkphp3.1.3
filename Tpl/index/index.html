@@ -22,10 +22,11 @@
        $(function(){
            $('.commonButton').click(function(){
                var vote = $('input:radio:checked').val();
+               var shop_id={$shop_id};
                if(vote){
                    $.ajax({
                        url:'/index.php/Index/vote/',
-                       data:{vote:vote},
+                       data:{vote:vote,shop_id:shop_id},
                        type:'post',
                        success:function(e){
                            if(e==1){
