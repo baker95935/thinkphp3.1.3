@@ -39,10 +39,11 @@ class IndexAction extends Action
      
     	//获取当前的用户ID
     	session_start();
-    	$user=array('id'=>1,'username'=>'baker');
+    	$user=array('id'=>14,'username'=>'baker');
     	$this->assign('user',$user);
     	
     	//获取当前用户的选项
+    	$itemInfo=array();
     	$itemInfo=M('vote', null)->where("uid='".$user['id']."'")->find();
     	$this->assign('itemInfo',$itemInfo);
     	
@@ -52,7 +53,7 @@ class IndexAction extends Action
     public function vote()
     {
     	session_start();
-    	$user=array('id'=>1,'username'=>'baker');
+    	$user=array('id'=>14,'username'=>'baker');
     	$data=array();
     	$data['create_time']=time();
     	$data['ip_addr']=$_SERVER['REMOTE_ADDR'];
@@ -60,12 +61,18 @@ class IndexAction extends Action
     	$data['item_value']=1;
     	$data['uid']=$user['id'];
     	
+    	//校验下是否已投
+    	$count=M('vote',null)->where('uid='.$data['uid'])->count();
+    	if($count>0) {
+    		echo 2;exit;
+    	}
+    	
     	$res=M('vote',null)->add($data);
  
     	if($res){
-			echo 1;
+			echo 1;exit;
 		}else{
-			echo 0;
+			echo 0;exit;
 		}
     }
 }

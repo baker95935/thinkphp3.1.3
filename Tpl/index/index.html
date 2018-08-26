@@ -7,9 +7,9 @@
 <body>
 标题
  <br>
- {$user.id}
-  <foreach name="itemList" key="key" item="item">
-     <input type="radio" name="vote" id="vote"  value="{$key}">{$item}<br>
+ 
+  <foreach name="itemList" key="key" item="item"> 
+     <input type="radio" name="vote" id="vote"  value="{$key}"   {if condition="$itemInfo.item_id eq $key"} checked="checked" {/if}>{$item}<br>
   </foreach>
   <button class="commonButton">投票</button>
  <div id="vote_show"></div>
@@ -32,7 +32,9 @@
                                alert('投票成功！');
                                location.reload();
                                return false;
-                           } 
+                           } else if(e==2) {
+                           	  alert('您已投票');
+                           }
                        }
                    });
                }else{
